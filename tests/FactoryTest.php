@@ -5,6 +5,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase {
    private $start;
    private $middle;
    private $end;
+   private $alt;
 
    public function setUp() {
       $this->start = Mango::factory('test'); 
@@ -18,6 +19,10 @@ class FactoryTest extends PHPUnit_Framework_TestCase {
       $this->end = Mango::factory('test'); 
       $this->end->st = 'end';
       $this->end->create();
+
+      $this->alt = Mango::factory('alt');
+      $this->alt->st = 'start';
+      $this->alt->create();
    }
 
    public function tearDown() {
@@ -83,6 +88,16 @@ class FactoryTest extends PHPUnit_Framework_TestCase {
       if(!$end->loaded()) {
 	 $this->fail('Model does not exist');
       } 
+   }
+
+   public function testLoadAltModel() {
+      $alt = Statemachine::factory('alttest');
+      $alt->load(array('st' => 'start'));
+      if ($alt->loaded()) {
+	 $this->assertEquals('start', $alt->current_state());
+      } else {
+	 $this->fail('Model exists in fixture');
+      }
    }
 
 }

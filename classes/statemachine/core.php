@@ -34,7 +34,12 @@ abstract class Statemachine_Core {
    }
 
    public function load($args) {
-      $this->model = Mango::factory($this->machine_type);
+      if(isset($this->_model)) {
+	 $model_type = $this->_model;
+      } else {
+	 $model_type = $this->machine_type;
+      }
+      $this->model = Mango::factory($model_type);
       foreach ($args as $key=>$value) {
 	 $this->model->$key = $value;
       }

@@ -1,6 +1,7 @@
 <?php
 
-class Sm_Test extends Statemachine {
+class Sm_Alttest extends Statemachine {
+   protected $_model = 'alt';
 
    protected $_states = array(
       'start',
