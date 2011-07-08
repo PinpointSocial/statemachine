@@ -2,12 +2,28 @@
 
 class FactoryTest extends PHPUnit_Framework_TestCase {
 
-   public function setUp() {
+   private $start;
+   private $middle;
+   private $end;
 
+   public function setUp() {
+      $this->start = Mango::factory('test'); 
+      $this->start->st = 'start';
+      $this->start->create();
+      
+      $this->middle = Mango::factory('test'); 
+      $this->middle->st = 'middle';
+      $this->middle->create();
+      
+      $this->end = Mango::factory('test'); 
+      $this->end->st = 'end';
+      $this->end->create();
    }
 
    public function tearDown() {
-
+      $m = new Mongo();
+      $db = $m->selectDB('statemachine_unittest');
+      $db->command(array('dropDatabase' => 1));
    }
 
    public function testLoadPass() {

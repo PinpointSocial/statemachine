@@ -1,9 +1,10 @@
 <?php
 
-public class Model_Test extends Mango {
+class Model_Test extends Mango {
    protected $_fields = array(
-      'st' =>
-      
+      'st' => array(
+	 'type' => 'string',
+	 'required' => 'true',
+      ),
    );
-
 }
