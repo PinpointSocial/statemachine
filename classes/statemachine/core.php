@@ -10,5 +10,4 @@ abstract class Statemachine_Core {
    public function __construct() {
 
    }
-
 }
