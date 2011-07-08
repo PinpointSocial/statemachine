@@ -11,7 +11,11 @@ class Sm_Test extends Statemachine {
    protected $_transitions = array(
       'start' => array(
 	 'foo' => 'middle',
-      ), 
+      ),
+
+      'middle' => array(
+	 'bar' => 'end',
+      ),
    );
 
    public function foo($args) {

@@ -61,6 +61,28 @@ class FactoryTest extends PHPUnit_Framework_TestCase {
       } else {
 	 $this->fail('Model exists in fixture');
       }
+
+      $middle = Statemachine::factory('test');
+      $middle->load(array('st' => 'middle'));
+      if($middle->loaded()) {
+	 $this->assertEquals('middle', $middle->current_state());
+      } else {
+	 $this->fail('Model exists in fixture');
+      }
+      
+      $end= Statemachine::factory('test');
+      $end->load(array('st' => 'end'));
+      if($end->loaded()) {
+	 $this->assertEquals('end', $end->current_state());
+      } else {
+	 $this->fail('Model exists in fixture');
+      }
+      
+      $fail = Statemachine::factory('test');
+      $fail->load(array('st' => 'fail'));
+      if(!$end->loaded()) {
+	 $this->fail('Model does not exist');
+      } 
    }
 
 }
