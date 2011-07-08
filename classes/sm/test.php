@@ -19,10 +19,16 @@ class Sm_Test extends Statemachine {
    );
 
    public function foo($args) {
-      if(isset($args['bool'])) {
-	 
-      } else {
-
+      if(!isset($args['bool'])) {
+	 throw new Statemachine_Exception('Arguments required');
       }
+      return $args['bool'];
+   }
+   
+   public function bar($args) {
+      if(!isset($args['bool'])) {
+	 throw new Statemachine_Exception('Arguments required');
+      }
+      return $args['bool'];
    }
 }

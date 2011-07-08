@@ -53,4 +53,17 @@ abstract class Statemachine_Core {
    public function loaded() {
       return $this->loaded;
    }
+
+   public function process($function, $args) {
+      if(!method_exists($this, $function)) {
+	 throw new Statemachine_Exception('Unknown Function');
+      }
+      // Get keys of legal functions current state
+      $legal = array_keys($this->_transitions[$this->current_state]);
+      if(!in_array($function, $legal)){
+	 throw new Statemachine_Exception('Illegal Function Call');
+      }
+
+      return $this->$function($args);
+   }
 }
