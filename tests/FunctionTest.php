@@ -53,5 +53,17 @@ class FunctionTest extends PHPUnit_Framework_TestCase {
       }
       $machine->process('baz', array('bool' => true));
    }
-   
+
+   /**
+   *  @expectedException Statemachine_Exception
+   */
+   public function testDirectFunctionIllegal() {
+      $machine = Statemachine::factory('test');
+      $machine->load(array('st' => 'start'));
+      if(!$machine->loaded()) {
+	 $this->fail('Model exists in fixture');
+      }
+      $machine->process('bar', array('bool' => true));
+   }
+
 }
