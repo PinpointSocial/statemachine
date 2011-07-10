@@ -6,6 +6,9 @@ abstract class Statemachine_Core {
    private $model = null;
    private $machine_type = null;
    private $loaded = FALSE;
+
+   protected $_states = array();
+   protected $_transitions = array();
    
    public static function factory($machine_type) {
       $machine = 'Sm_'.$machine_type;
@@ -65,5 +68,13 @@ abstract class Statemachine_Core {
       }
 
       return $this->$function($args);
+   }
+
+   public function next($args) {
+
+   }
+
+   protected function complete_state($current_function) {
+      $this->current_state = $this->_transitions[$this->current_state][$current_function];
    }
 }

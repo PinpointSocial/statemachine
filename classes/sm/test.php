@@ -22,7 +22,12 @@ class Sm_Test extends Statemachine {
       if(!isset($args['bool'])) {
 	 throw new Statemachine_Exception('Arguments required');
       }
-      return $args['bool'];
+      if($args['bool']) {
+	 $this->complete_state(__FUNCTION__);
+	 return true;
+      } else {
+	 return false;
+      }
    }
    
    public function bar($args) {
