@@ -21,6 +21,7 @@ class Sm_Multi extends Statemachine {
       }
       
       if($args['foo'] == TRUE) {
+	 $this->complete_state(__FUNCTION__);
 	 return true;
       } 
       
@@ -33,6 +34,7 @@ class Sm_Multi extends Statemachine {
       }
       
       if($args['foo'] == TRUE) {
+	 $this->complete_state(__FUNCTION__);
 	 return true;
       } 
       

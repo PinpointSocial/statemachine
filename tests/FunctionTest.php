@@ -6,6 +6,7 @@ class FunctionTest extends PHPUnit_Framework_TestCase {
    private $middle;
    private $end;
    private $alt;
+   private $multi;
 
    public function setUp() {
       $this->start = Mango::factory('test'); 
@@ -23,6 +24,10 @@ class FunctionTest extends PHPUnit_Framework_TestCase {
       $this->alt = Mango::factory('alt');
       $this->alt->st = 'start';
       $this->alt->create();
+
+      $this->multi = Mango::factory('multi');
+      $this->multi->st = 'idle';
+      $this->multi->create();
    }
 
    public function tearDown() {
@@ -102,7 +107,12 @@ class FunctionTest extends PHPUnit_Framework_TestCase {
    *  @expectedExceptionMessage State Is Non Linear 
    */
    public function testNextNonLinear() {
-
+      $machine = Statemachine::factory('multi');
+      $machine->load(array('st'=>'idle'));
+      if(!$machine->loaded()) {
+	 $this->fail('This machine exists in fixture.');
+      }
+      $machine->next(array('foo' => TRUE,));
    }
    
    /**
@@ -110,7 +120,12 @@ class FunctionTest extends PHPUnit_Framework_TestCase {
    *  @expectedExceptionMessage Current State Is End State 
    */
    public function testNextEndState() {
-
+      $machine = Statemachine::factory('test');
+      $machine->load(array('st'=>'end'));
+      if(!$machine->loaded()) {
+	 $this->fail('This machine exists in fixture.');
+      }
+      $machine->next(array('bool' => TRUE,));
    }
 
 }

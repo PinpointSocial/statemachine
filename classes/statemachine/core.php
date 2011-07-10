@@ -71,7 +71,16 @@ abstract class Statemachine_Core {
    }
 
    public function next($args) {
+      if(!isset($this->_transitions[$this->current_state])) {
+	 throw new Statemachine_Exception('Current State Is End State');
+      }
 
+      if(count($this->_transitions[$this->current_state]) != 1) {
+	 throw new Statemachine_Exception('State Is Non Linear');
+      }
+
+      $function  = array_keys($this->_transitions[$this->current_state]);
+      return $this->process($function[0],$args);
    }
 
    protected function complete_state($current_function) {
