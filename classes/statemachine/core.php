@@ -3,13 +3,13 @@
 abstract class Statemachine_Core {
 
    private $current_state = null;
-   private $model = null;
+   protected $model = null;
    private $machine_type = null;
    private $loaded = FALSE;
 
    protected $_states = array();
    protected $_transitions = array();
-   
+
    public static function factory($machine_type) {
       $machine = 'Sm_'.$machine_type;
       if(class_exists($machine)) {
@@ -22,6 +22,13 @@ abstract class Statemachine_Core {
 
    public function __construct($machine_type) {
       $this->machine_type = $machine_type;
+
+      if(isset($this->_model)) {
+	 $model_type = $this->_model;
+      } else {
+	 $model_type = $this->machine_type;
+      }
+      $this->model = Mango::factory($model_type);
    }
 
    public function create() {
@@ -37,12 +44,6 @@ abstract class Statemachine_Core {
    }
 
    public function load($args) {
-      if(isset($this->_model)) {
-	 $model_type = $this->_model;
-      } else {
-	 $model_type = $this->machine_type;
-      }
-      $this->model = Mango::factory($model_type);
       foreach ($args as $key=>$value) {
 	 $this->model->$key = $value;
       }
