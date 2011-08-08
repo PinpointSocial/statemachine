@@ -3,7 +3,7 @@
 abstract class Statemachine_Core {
 
    private $current_state = null;
-   protected $model = null;
+   public $model = null;
    private $machine_type = null;
    private $loaded = FALSE;
 
@@ -63,7 +63,7 @@ abstract class Statemachine_Core {
 	 throw new Statemachine_Exception('Unknown Function');
       }
       // Get keys of legal functions current state
-      $legal = array_keys($this->_transitions[$this->current_state]);
+      $legal = array_keys($this->_transitions[$this->model->st]);
       if(!in_array($function, $legal)){
 	 throw new Statemachine_Exception('Illegal Function Call');
       }
@@ -72,19 +72,19 @@ abstract class Statemachine_Core {
    }
 
    public function next($args) {
-      if(!isset($this->_transitions[$this->current_state])) {
+      if(!isset($this->_transitions[$this->model->st])) {
 	 throw new Statemachine_Exception('Current State Is End State');
       }
 
-      if(count($this->_transitions[$this->current_state]) != 1) {
+      if(count($this->_transitions[$this->model->st]) != 1) {
 	 throw new Statemachine_Exception('State Is Non Linear');
       }
 
-      $function  = array_keys($this->_transitions[$this->current_state]);
+      $function  = array_keys($this->_transitions[$this->model->st]);
       return $this->process($function[0],$args);
    }
 
    protected function complete_state($current_function) {
-      $this->current_state = $this->_transitions[$this->current_state][$current_function];
+      $this->current_state = $this->_transitions[$this->model->st][$current_function];
    }
 }
