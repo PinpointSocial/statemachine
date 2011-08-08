@@ -32,12 +32,13 @@ abstract class Statemachine_Core {
    }
 
    public function create() {
-      $this->current_state = $this->_states[0];
+      $this->model->st = $this->_states[0];
+      $this->model->create();
    }
 
    public function current_state() {
       if ($this->current_state != null) {
-	 return $this->current_state;
+	 return $this->model->st;
       } else {
 	 throw new Statemachine_Exception('Machine Is Not Initialized');
       }
@@ -85,6 +86,7 @@ abstract class Statemachine_Core {
    }
 
    protected function complete_state($current_function) {
-      $this->current_state = $this->_transitions[$this->model->st][$current_function];
+      $this->model->st= $this->_transitions[$this->model->st][$current_function];
+      $this->model->update();
    }
 }
